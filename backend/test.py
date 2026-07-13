@@ -1,2 +1,3 @@
-from app.models.sessions import Session
-print(Session.__tablename__)
+from app.models.event import Event
+
+print(Event.__tablename__)
