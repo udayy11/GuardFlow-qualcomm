@@ -1,5 +1,3 @@
-from app.core.logger import configure_logger, logger
+from app.database.database import init_database
 
-configure_logger()
-
-logger.info("Backend Started")
+init_database()
