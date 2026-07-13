@@ -34,12 +34,3 @@ source_app
 2026-07-14 01:56:14.898 | INFO     | database.init_database:75 | Database tables initialized successfully
 2026-07-14 01:56:14.898 | INFO     | main.lifespan:28 | Application startup completed
 2026-07-14 01:56:23.468 | INFO     | main.lifespan:35 | Shutting down application
-2026-07-14 02:02:09.194 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 02:02:09.251 | INFO     | database.init_database:75 | Database tables initialized successfully
-2026-07-14 02:02:09.251 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 02:03:19.812 | INFO     | event_processor.process_event:38 | Processed event SCREEN_SHARE for session session-001
-2026-07-14 02:04:26.414 | ERROR    | event_processor.process_event:51 | Event processing failed: (sqlite3.IntegrityError) UNIQUE constraint failed: events.id
-[SQL: INSERT INTO events (id, session_id, event_type, source_app, timestamp, payload) VALUES (?, ?, ?, ?, ?, ?) RETURNING created_at]
-[parameters: ('evt-002', 'session-001', 'SCREEN_SHARE', 'AnyDesk', '2026-07-13 20:30:00.000000', '{"screen_share": true}')]
-(Background on this error at: https://sqlalche.me/e/20/gkpj)
-2026-07-14 02:04:58.266 | INFO     | main.lifespan:35 | Shutting down application
