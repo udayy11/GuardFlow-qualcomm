@@ -6,3 +6,15 @@
 2026-07-13 23:42:05.636 | INFO     | database.init_database:54 | Database tables initialized successfully
 2026-07-13 23:42:05.637 | INFO     | main.startup:46 | Application startup completed
 2026-07-13 23:42:07.390 | INFO     | main.shutdown:55 | Shutting down application
+2026-07-13 23:42:13.568 | INFO     | main.startup:43 | Starting application
+2026-07-13 23:42:13.570 | INFO     | database.init_database:54 | Database tables initialized successfully
+2026-07-13 23:42:13.570 | INFO     | main.startup:46 | Application startup completed
+2026-07-13 23:45:30.175 | INFO     | main.shutdown:55 | Shutting down application
+2026-07-13 23:45:31.129 | INFO     | main.startup:43 | Starting application
+2026-07-13 23:45:31.131 | INFO     | database.init_database:54 | Database tables initialized successfully
+2026-07-13 23:45:31.132 | INFO     | main.startup:46 | Application startup completed
+2026-07-13 23:56:03.098 | INFO     | main.shutdown:55 | Shutting down application
+2026-07-13 23:56:04.942 | INFO     | main.startup:43 | Starting application
+2026-07-13 23:56:04.946 | INFO     | database.init_database:54 | Database tables initialized successfully
+2026-07-13 23:56:04.946 | INFO     | main.startup:46 | Application startup completed
+2026-07-13 23:56:18.635 | INFO     | main.shutdown:55 | Shutting down application

@@ -1,3 +1,3 @@
-from app.database.database import init_database
+from app.models.event import Event
 
-init_database()
+print(Event.__tablename__)
