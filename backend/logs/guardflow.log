@@ -1,1 +1,8 @@
 2026-07-13 23:32:35.236 | INFO     | test.<module>:5 | Backend Started
+2026-07-13 23:40:16.081 | INFO     | main.startup:43 | Starting application
+2026-07-13 23:40:16.082 | INFO     | database.init_database:54 | Database tables initialized successfully
+2026-07-13 23:40:16.082 | CRITICAL | main.startup:48 | Startup failed: object NoneType can't be used in 'await' expression
+2026-07-13 23:42:05.634 | INFO     | main.startup:43 | Starting application
+2026-07-13 23:42:05.636 | INFO     | database.init_database:54 | Database tables initialized successfully
+2026-07-13 23:42:05.637 | INFO     | main.startup:46 | Application startup completed
+2026-07-13 23:42:07.390 | INFO     | main.shutdown:55 | Shutting down application
