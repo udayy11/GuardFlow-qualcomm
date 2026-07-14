@@ -1,21 +1,24 @@
 from datetime import datetime
-from uuid import UUID
-from typing import Optional, Literal
-
-from app.core.logger import logger
-from app.repositories.event_repository import EventRepository
 from app.schemas.event_schema import EventRequest, EventResponse
+from app.repositories.event_repository import EventRepository
+from app.repositories.session_repository import SessionRepository
 from app.models.event import Event
+from app.core.logger import logger
 
 class EventProcessor:
-    """Core service for event processing and risk evaluation."""
+    """Enhanced event processor with session handling."""
 
-    def __init__(self, event_repository: EventRepository):
+    def __init__(
+    self,
+    event_repository: EventRepository,
+    session_repository: SessionRepository,
+    ):
         self.event_repository = event_repository
+        self.session_repository = session_repository
 
     def process_event(self, event_data: EventRequest) -> EventResponse:
-        """Validate, persist, and process an event.
-
+        """Process an event with session validation and creation.
+        
         Args:
             event_data: Validated incoming event data
 
@@ -23,7 +26,16 @@ class EventProcessor:
             Standardized response indicating processing status
         """
         try:
-            # Convert to ORM model
+            # Check/Create session first
+            session = self.session_repository.get_session(event_data.session_id)
+            if not session:
+                logger.info(f"Creating new session for {event_data.session_id}")
+                self.session_repository.create_session(
+                    session_id=event_data.session_id,
+                    started_at=event_data.timestamp
+                )
+
+            # Process event
             event = Event(
                 id=event_data.event_id,
                 session_id=event_data.session_id,
@@ -33,14 +45,8 @@ class EventProcessor:
                 payload=event_data.payload,
             )
 
-            # Persist event
             saved_event = self.event_repository.save(event)
-            logger.info(f"Processed event {saved_event.event_type} for session {saved_event.session_id}")
-
-            # Future extension points:
-            # - AI processing pipeline
-            # - Rule engine evaluation
-            # - Asynchronous workflows
+            logger.info(f"Processed event {saved_event.event_type}")
 
             return EventResponse(
                 status="success",

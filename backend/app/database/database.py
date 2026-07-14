@@ -12,11 +12,16 @@ from app.models.event import Event
 from app.models.sessions import Session as SessionModel  # noqa: F401 - imported for Base.metadata registration
 from app.models.risk_assessment import RiskAssessment  # noqa: F401 - imported for Base.metadata registration
 # Database engine
+
 engine = create_engine(
     settings.DATABASE_URL,
     pool_pre_ping=True,  # Checks connection health before use
     echo=settings.DEBUG,  # Log SQL queries in debug mode
 )
+
+print("=" * 50)
+print("DATABASE URL:", settings.DATABASE_URL)
+print("=" * 50)
 
 # Session factory
 SessionLocal = sessionmaker(

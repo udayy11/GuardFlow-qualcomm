@@ -1,45 +1,34 @@
-2026-07-14 01:18:41.990 | INFO     | main.lifespan:24 | Starting application
-2026-07-14 01:18:42.029 | INFO     | database.init_database:75 | Database tables initialized successfully
-2026-07-14 01:18:42.029 | INFO     | main.lifespan:27 | Application startup completed
-2026-07-14 01:26:45.057 | INFO     | websocket_manager.websocket_endpoint:20 | WebSocket client connected
-2026-07-14 01:26:45.059 | WARNING  | websocket_manager.websocket_endpoint:35 | Invalid event payload over websocket: 4 validation errors for EventRequest
-event_id
-  Field required [type=missing, input_value={'source': 'chrome_extens...500 registration fee'}, input_type=dict]
-    For further information visit https://errors.pydantic.dev/2.13/v/missing
-event_type
-  Field required [type=missing, input_value={'source': 'chrome_extens...500 registration fee'}, input_type=dict]
-    For further information visit https://errors.pydantic.dev/2.13/v/missing
-timestamp
-  Field required [type=missing, input_value={'source': 'chrome_extens...500 registration fee'}, input_type=dict]
-    For further information visit https://errors.pydantic.dev/2.13/v/missing
-source_app
-  Field required [type=missing, input_value={'source': 'chrome_extens...500 registration fee'}, input_type=dict]
-    For further information visit https://errors.pydantic.dev/2.13/v/missing
-2026-07-14 01:26:45.060 | INFO     | websocket_manager.websocket_endpoint:55 | Disconnected
-2026-07-14 01:32:16.985 | INFO     | event_processor.process_event:38 | Processed event LINK_CLICKED for session session-001
-2026-07-14 01:44:20.925 | INFO     | risk.get_risk_score:76 | Risk assessment for session session-001: 0/LOW (rules: [])
-2026-07-14 01:44:47.163 | INFO     | main.lifespan:34 | Shutting down application
-2026-07-14 01:44:52.293 | INFO     | main.lifespan:24 | Starting application
-2026-07-14 01:44:52.297 | INFO     | database.init_database:75 | Database tables initialized successfully
-2026-07-14 01:44:52.297 | INFO     | main.lifespan:27 | Application startup completed
-2026-07-14 01:45:28.087 | INFO     | event_processor.process_event:38 | Processed event string for session string
-2026-07-14 01:46:02.759 | ERROR    | event_processor.process_event:51 | Event processing failed: (sqlite3.IntegrityError) UNIQUE constraint failed: events.id
-[SQL: INSERT INTO events (id, session_id, event_type, source_app, timestamp, payload) VALUES (?, ?, ?, ?, ?, ?) RETURNING created_at]
-[parameters: ('string', 'string', 'string', 'string', '2026-07-12 20:15:12.518000', '{"additionalProp1": {}}')]
-(Background on this error at: https://sqlalche.me/e/20/gkpj)
-2026-07-14 01:46:29.778 | INFO     | risk.get_risk_score:76 | Risk assessment for session session-001: 0/LOW (rules: [])
-2026-07-14 01:46:42.199 | INFO     | risk.get_risk_score:76 | Risk assessment for session session-001: 0/LOW (rules: [])
-2026-07-14 01:56:13.791 | INFO     | main.lifespan:34 | Shutting down application
-2026-07-14 01:56:14.896 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 01:56:14.898 | INFO     | database.init_database:75 | Database tables initialized successfully
-2026-07-14 01:56:14.898 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 01:56:23.468 | INFO     | main.lifespan:35 | Shutting down application
-2026-07-14 02:02:09.194 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 02:02:09.251 | INFO     | database.init_database:75 | Database tables initialized successfully
-2026-07-14 02:02:09.251 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 02:03:19.812 | INFO     | event_processor.process_event:38 | Processed event SCREEN_SHARE for session session-001
-2026-07-14 02:04:26.414 | ERROR    | event_processor.process_event:51 | Event processing failed: (sqlite3.IntegrityError) UNIQUE constraint failed: events.id
-[SQL: INSERT INTO events (id, session_id, event_type, source_app, timestamp, payload) VALUES (?, ?, ?, ?, ?, ?) RETURNING created_at]
-[parameters: ('evt-002', 'session-001', 'SCREEN_SHARE', 'AnyDesk', '2026-07-13 20:30:00.000000', '{"screen_share": true}')]
-(Background on this error at: https://sqlalche.me/e/20/gkpj)
-2026-07-14 02:04:58.266 | INFO     | main.lifespan:35 | Shutting down application
+2026-07-14 11:49:07.316 | INFO     | main.lifespan:25 | Starting application
+2026-07-14 11:49:07.367 | INFO     | database.init_database:84 | Database tables initialized successfully
+2026-07-14 11:49:07.368 | INFO     | main.lifespan:28 | Application startup completed
+2026-07-14 11:49:49.517 | INFO     | main.lifespan:35 | Shutting down application
+2026-07-14 11:49:50.460 | INFO     | main.lifespan:25 | Starting application
+2026-07-14 11:49:50.465 | INFO     | database.init_database:84 | Database tables initialized successfully
+2026-07-14 11:49:50.465 | INFO     | main.lifespan:28 | Application startup completed
+2026-07-14 11:49:59.478 | INFO     | main.lifespan:35 | Shutting down application
+2026-07-14 11:50:03.127 | INFO     | main.lifespan:25 | Starting application
+2026-07-14 11:50:03.130 | INFO     | database.init_database:84 | Database tables initialized successfully
+2026-07-14 11:50:03.130 | INFO     | main.lifespan:28 | Application startup completed
+2026-07-14 11:50:27.234 | INFO     | main.lifespan:35 | Shutting down application
+2026-07-14 11:50:31.121 | INFO     | main.lifespan:25 | Starting application
+2026-07-14 11:50:31.123 | INFO     | database.init_database:84 | Database tables initialized successfully
+2026-07-14 11:50:31.124 | INFO     | main.lifespan:28 | Application startup completed
+2026-07-14 11:50:48.829 | INFO     | main.lifespan:35 | Shutting down application
+2026-07-14 11:50:49.869 | INFO     | main.lifespan:25 | Starting application
+2026-07-14 11:50:49.874 | INFO     | database.init_database:80 | Database tables initialized successfully
+2026-07-14 11:50:49.874 | INFO     | main.lifespan:28 | Application startup completed
+2026-07-14 11:51:22.997 | INFO     | main.lifespan:35 | Shutting down application
+2026-07-14 11:51:23.976 | INFO     | main.lifespan:25 | Starting application
+2026-07-14 11:51:23.978 | INFO     | database.init_database:80 | Database tables initialized successfully
+2026-07-14 11:51:23.979 | INFO     | main.lifespan:28 | Application startup completed
+2026-07-14 11:51:26.281 | INFO     | main.lifespan:35 | Shutting down application
+2026-07-14 11:52:47.375 | INFO     | main.lifespan:25 | Starting application
+2026-07-14 11:52:47.378 | INFO     | database.init_database:80 | Database tables initialized successfully
+2026-07-14 11:52:47.379 | INFO     | main.lifespan:28 | Application startup completed
+2026-07-14 11:52:51.186 | INFO     | event_processor.process_event:32 | Creating new session for session-100
+2026-07-14 11:52:51.237 | INFO     | session_repository.create_session:68 | Created new session: session-100
+2026-07-14 11:52:51.272 | INFO     | event_processor.process_event:49 | Processed event LINK_CLICKED
+2026-07-14 11:53:14.644 | INFO     | event_processor.process_event:32 | Creating new session for session-102
+2026-07-14 11:53:14.679 | INFO     | session_repository.create_session:68 | Created new session: session-102
+2026-07-14 11:53:14.713 | INFO     | event_processor.process_event:49 | Processed event LINK_CLICKED
+2026-07-14 11:56:32.953 | INFO     | main.lifespan:35 | Shutting down application

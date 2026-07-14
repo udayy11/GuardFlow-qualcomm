@@ -5,6 +5,7 @@ from app.database.database import get_db
 from app.schemas.event_schema import EventRequest, EventResponse
 from app.services.event_processor import EventProcessor
 from app.repositories.event_repository import EventRepository
+from app.repositories.session_repository import SessionRepository
 
 router = APIRouter(prefix="/events", tags=["events"])
 
@@ -32,7 +33,10 @@ def create_event(
     Returns:
         Standardized response with processing status
     """
-    processor = EventProcessor(EventRepository(db))
+    processor = EventProcessor(
+    event_repository=EventRepository(db),
+    session_repository=SessionRepository(db),
+    )
     result = processor.process_event(event_data)
 
     if result.status == "error":
