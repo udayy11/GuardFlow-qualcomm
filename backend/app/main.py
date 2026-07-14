@@ -61,6 +61,10 @@ async def root():
         "version": settings.APP_VERSION
     }
 
+@app.get("/health")
+async def health_check():
+    return {"status": "OK"}
+
 
 # Register routers
 app.include_router(
