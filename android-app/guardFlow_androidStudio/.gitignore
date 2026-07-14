@@ -1,0 +1,39 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Build and IDE
+/build/
+/.gradle/
+/.idea/
+*.iml
+
+# Gradle
+gradle-wrapper.jar
+
+# Local settings
+*.properties
+local.properties
+
+# Generated files
+app/build/
+app/*.apk
+app/*.aab
+
+# Temp/debug files
+*.log
+*.lock
+*.tmp
+*.swp

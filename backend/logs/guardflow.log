@@ -1,34 +1,23 @@
-2026-07-14 11:49:07.316 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 11:49:07.367 | INFO     | database.init_database:84 | Database tables initialized successfully
-2026-07-14 11:49:07.368 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 11:49:49.517 | INFO     | main.lifespan:35 | Shutting down application
-2026-07-14 11:49:50.460 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 11:49:50.465 | INFO     | database.init_database:84 | Database tables initialized successfully
-2026-07-14 11:49:50.465 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 11:49:59.478 | INFO     | main.lifespan:35 | Shutting down application
-2026-07-14 11:50:03.127 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 11:50:03.130 | INFO     | database.init_database:84 | Database tables initialized successfully
-2026-07-14 11:50:03.130 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 11:50:27.234 | INFO     | main.lifespan:35 | Shutting down application
-2026-07-14 11:50:31.121 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 11:50:31.123 | INFO     | database.init_database:84 | Database tables initialized successfully
-2026-07-14 11:50:31.124 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 11:50:48.829 | INFO     | main.lifespan:35 | Shutting down application
-2026-07-14 11:50:49.869 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 11:50:49.874 | INFO     | database.init_database:80 | Database tables initialized successfully
-2026-07-14 11:50:49.874 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 11:51:22.997 | INFO     | main.lifespan:35 | Shutting down application
-2026-07-14 11:51:23.976 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 11:51:23.978 | INFO     | database.init_database:80 | Database tables initialized successfully
-2026-07-14 11:51:23.979 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 11:51:26.281 | INFO     | main.lifespan:35 | Shutting down application
-2026-07-14 11:52:47.375 | INFO     | main.lifespan:25 | Starting application
-2026-07-14 11:52:47.378 | INFO     | database.init_database:80 | Database tables initialized successfully
-2026-07-14 11:52:47.379 | INFO     | main.lifespan:28 | Application startup completed
-2026-07-14 11:52:51.186 | INFO     | event_processor.process_event:32 | Creating new session for session-100
-2026-07-14 11:52:51.237 | INFO     | session_repository.create_session:68 | Created new session: session-100
-2026-07-14 11:52:51.272 | INFO     | event_processor.process_event:49 | Processed event LINK_CLICKED
-2026-07-14 11:53:14.644 | INFO     | event_processor.process_event:32 | Creating new session for session-102
-2026-07-14 11:53:14.679 | INFO     | session_repository.create_session:68 | Created new session: session-102
-2026-07-14 11:53:14.713 | INFO     | event_processor.process_event:49 | Processed event LINK_CLICKED
-2026-07-14 11:56:32.953 | INFO     | main.lifespan:35 | Shutting down application
+2026-07-15 00:01:52.739 | INFO     | main.lifespan:25 | Starting application
+2026-07-15 00:01:52.790 | INFO     | database.init_database:85 | Database tables initialized successfully
+2026-07-15 00:01:52.792 | INFO     | main.lifespan:28 | Application startup completed
+2026-07-15 00:03:19.153 | INFO     | event_processor.process_event:32 | Creating new session for 11e311a8-12f2-4314-bf31-48066204b915
+2026-07-15 00:03:19.166 | INFO     | session_repository.create_session:68 | Created new session: 11e311a8-12f2-4314-bf31-48066204b915
+2026-07-15 00:03:19.179 | INFO     | event_processor.process_event:49 | Processed event link_clicked
+2026-07-15 00:03:35.896 | INFO     | event_processor.process_event:49 | Processed event link_clicked
+2026-07-15 00:04:07.897 | INFO     | event_processor.process_event:49 | Processed event app_opened
+2026-07-15 00:04:08.214 | INFO     | event_processor.process_event:49 | Processed event link_clicked
+2026-07-15 00:06:03.947 | INFO     | main.lifespan:35 | Shutting down application
+2026-07-15 00:06:07.398 | INFO     | main.lifespan:25 | Starting application
+2026-07-15 00:06:07.404 | INFO     | database.init_database:85 | Database tables initialized successfully
+2026-07-15 00:06:07.405 | INFO     | main.lifespan:28 | Application startup completed
+2026-07-15 00:06:31.433 | INFO     | event_processor.process_event:49 | Processed event link_clicked
+2026-07-15 00:08:29.228 | INFO     | event_processor.process_event:49 | Processed event link_clicked
+2026-07-15 00:08:34.359 | INFO     | event_processor.process_event:49 | Processed event app_opened
+2026-07-15 00:08:35.836 | INFO     | event_processor.process_event:49 | Processed event link_clicked
+2026-07-15 00:11:04.105 | INFO     | event_processor.process_event:49 | Processed event link_clicked
+2026-07-15 00:11:06.259 | INFO     | event_processor.process_event:49 | Processed event link_clicked
+2026-07-15 00:11:07.691 | INFO     | event_processor.process_event:49 | Processed event link_clicked
+2026-07-15 00:13:45.533 | INFO     | event_processor.process_event:49 | Processed event app_opened
+2026-07-15 00:13:47.664 | INFO     | event_processor.process_event:49 | Processed event app_opened
+2026-07-15 00:20:38.280 | INFO     | main.lifespan:35 | Shutting down application

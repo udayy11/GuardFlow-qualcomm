@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from typing import Iterator
-
+from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import sessionmaker, Session
@@ -19,6 +19,11 @@ engine = create_engine(
     echo=settings.DEBUG,  # Log SQL queries in debug mode
 )
 
+print("=" * 60)
+print("DATABASE URL:", settings.DATABASE_URL)
+print("Working Directory:", Path.cwd())
+print("Database Absolute Path:", Path("data/guardflow.db").resolve())
+print("=" * 60)
 print("=" * 50)
 print("DATABASE URL:", settings.DATABASE_URL)
 print("=" * 50)
