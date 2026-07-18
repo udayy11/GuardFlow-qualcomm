@@ -1,86 +1,113 @@
-from dataclasses import dataclass, field
-from typing import Sequence
-
-from app.models.event import Event
-
-# NOTE: This is an intentionally simple, transparent heuristic rule engine so
-# that "group by session -> calculate risk -> return a score" is functional
-# end-to-end for the hackathon. It is not meant to be the final fraud-detection
-# logic - see README "Suggested next sprint" for where to take this next
-# (weighted rules config, ML scoring, per-app rule sets, etc).
-
-SUSPICIOUS_KEYWORDS: tuple[str, ...] = (
-    "otp", "verify now", "urgent", "kyc", "refund",
-    "lottery", "prize", "gift card", "upi pin", "cvv",
-)
-
-RAPID_EVENT_THRESHOLD = 5  # events in one session before we flag "high volume"
+from typing import Optional, Dict, Any, List
 
 
-@dataclass(frozen=True)
-class RiskResult:
-    score: int
-    level: str
-    confidence: int
-    triggered_rules: list[str] = field(default_factory=list)
-    requires_physical_confirmation: bool = False
+class RiskEngine:
+    """Aggregates structured sub-scores into a final overall risk score."""
 
+    weight_website: float = 0.35
+    weight_payment: float = 0.35
+    weight_receiver: float = 0.20
+    weight_behaviour: float = 0.10
 
-class RuleEngine:
-    """Evaluates a session's events against a small set of heuristic rules."""
+    def _normalize_score(self, v: Optional[float]) -> float:
+        if v is None:
+            return 0.0
+        try:
+            return max(0.0, min(100.0, float(v)))
+        except Exception:
+            return 0.0
 
-    def evaluate(self, events: Sequence[Event]) -> RiskResult:
-        """Compute a risk result for all events belonging to one session."""
-        if not events:
-            return RiskResult(score=0, level="LOW", confidence=60, triggered_rules=[])
+    def _score_from_payment(self, payment: Dict[str, Any]) -> float:
+        if not payment:
+            return 0.0
+        amount = payment.get("amount") or 0
+        status = (payment.get("status") or "").lower()
+        receiver = payment.get("receiver") or {}
+        if isinstance(receiver, dict):
+            receiver_name = str(receiver.get("name") or "").strip().lower()
+        else:
+            receiver_name = str(receiver).strip().lower()
 
-        triggered: list[str] = []
-        score = 0
+        score = 0.0
+        try:
+            score += min(100.0, float(amount) / 1000.0)
+        except Exception:
+            pass
+        if status == "completed":
+            score += 10.0
+        if not receiver_name:
+            score += 20.0
+        return self._normalize_score(score)
 
-        # Rule 1: unusually high event volume in a single session
-        if len(events) >= RAPID_EVENT_THRESHOLD:
-            triggered.append("RULE_HIGH_EVENT_VOLUME")
-            score += 20
+    def _score_from_receiver(self, receiver_info: Dict[str, Any]) -> float:
+        if not receiver_info:
+            return 0.0
+        name = str(receiver_info.get("name") or "").strip()
+        return 70.0 if not name else 20.0
 
-        # Rule 2: suspicious keywords in event_type or string payload values
-        haystack_parts: list[str] = []
-        for event in events:
-            haystack_parts.append(event.event_type.lower())
-            for value in (event.payload or {}).values():
-                if isinstance(value, str):
-                    haystack_parts.append(value.lower())
-        haystack = " ".join(haystack_parts)
+    def _score_from_behaviour(self, behaviour: Dict[str, Any]) -> float:
+        if not behaviour:
+            return 0.0
+        anomalies = behaviour.get("anomalies", 0)
+        return self._normalize_score(min(100.0, anomalies * 10))
 
-        for keyword in SUSPICIOUS_KEYWORDS:
-            if keyword in haystack:
-                rule_id = f"RULE_KEYWORD_{keyword.upper().replace(' ', '_')}"
-                triggered.append(rule_id)
-                score += 15
+    def calculate_risk(
+        self,
+        website_risk: Optional[float] = None,
+        payment_risk_or_data: Optional[Any] = None,
+        receiver_risk_or_data: Optional[Any] = None,
+        behaviour_risk_or_data: Optional[Any] = None,
+    ) -> Dict[str, Any]:
+        website_score = self._normalize_score(website_risk)
 
-        # Rule 3: multiple payment-related events in one session
-        payment_events = [e for e in events if "payment" in e.event_type.lower()]
-        if len(payment_events) >= 2:
-            triggered.append("RULE_MULTIPLE_PAYMENT_EVENTS")
-            score += 25
+        if isinstance(payment_risk_or_data, (int, float)):
+            payment_score = self._normalize_score(payment_risk_or_data)
+        else:
+            payment_score = self._score_from_payment(payment_risk_or_data or {})
 
-        score = min(score, 100)
+        if isinstance(receiver_risk_or_data, (int, float)):
+            receiver_score = self._normalize_score(receiver_risk_or_data)
+        else:
+            receiver_score = self._score_from_receiver(receiver_risk_or_data or {})
 
-        if score >= 75:
-            level = "CRITICAL"
-        elif score >= 50:
+        if isinstance(behaviour_risk_or_data, (int, float)):
+            behaviour_score = self._normalize_score(behaviour_risk_or_data)
+        else:
+            behaviour_score = self._score_from_behaviour(behaviour_risk_or_data or {})
+
+        overall = (
+            website_score * self.weight_website
+            + payment_score * self.weight_payment
+            + receiver_score * self.weight_receiver
+            + behaviour_score * self.weight_behaviour
+        )
+        overall = max(0.0, min(100.0, overall))
+
+        if overall >= 60:
             level = "HIGH"
-        elif score >= 25:
+        elif overall >= 30:
             level = "MEDIUM"
         else:
             level = "LOW"
 
-        # More events observed -> more confident in the score, capped at 100.
-        confidence = min(60 + min(len(events), 8) * 5, 100)
+        present = sum(1 for v in (website_score, payment_score, receiver_score, behaviour_score) if v > 0)
+        confidence = int(min(95, 50 + present * 10 + overall / 10))
 
-        return RiskResult(
-            score=score,
-            level=level,
-            confidence=confidence,
-            triggered_rules=triggered,
-            requires_physical_confirmation=level in ("HIGH", "CRITICAL"),
-        )
+        rules: List[Dict[str, Any]] = []
+        if website_score > 50:
+            rules.append({"rule_id": "website_high", "description": "Website analysis indicates concern", "weight": 35, "evidence": ["website_score"]})
+        if payment_score > 50:
+            rules.append({"rule_id": "payment_high", "description": "Payment details look suspicious", "weight": 35, "evidence": ["payment_score"]})
+        if receiver_score > 50:
+            rules.append({"rule_id": "receiver_high", "description": "Receiver information is incomplete or unknown", "weight": 20, "evidence": ["receiver_score"]})
+        if behaviour_score > 50:
+            rules.append({"rule_id": "behaviour_high", "description": "Unusual user behaviour observed", "weight": 10, "evidence": ["behaviour_score"]})
+
+        return {
+            "overall_score": int(round(overall)),
+            "risk_level": level,
+            "confidence": confidence,
+            "reasons": [rule["description"] for rule in rules],
+            "triggered_rules": rules,
+            "requires_physical_confirmation": level == "HIGH",
+        }

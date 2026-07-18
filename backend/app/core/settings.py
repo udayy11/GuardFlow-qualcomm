@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Optional, Literal
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -36,6 +37,10 @@ class Settings(BaseSettings):
     # AI Config (Ollama)
     OLLAMA_URL: str = "http://localhost:11434"
     OLLAMA_MODEL: str = "llama3:latest"
+    # Local LLM calls (especially cold model loads) routinely take longer
+    # than a typical HTTP timeout. Configurable here instead of hardcoded
+    # in llm_service.py so it can be tuned per machine via .env.
+    OLLAMA_TIMEOUT: float = 30.0
 
     SERIAL_PORT: Optional[str] = None
     SERIAL_BAUDRATE: int = 9600

@@ -1,24 +1,26 @@
-from datetime import datetime
-from app.schemas.event_schema import EventRequest, EventResponse
-from app.repositories.event_repository import EventRepository
-from app.repositories.session_repository import SessionRepository
-from app.models.event import Event
 from app.core.logger import logger
+from app.repositories.event_repository import EventRepository
+from app.schemas.event_schema import EventRequest, EventResponse
+from app.models.event import Event
+
 
 class EventProcessor:
-    """Enhanced event processor with session handling."""
+    """Pure event ingestion service.
 
-    def __init__(
-    self,
-    event_repository: EventRepository,
-    session_repository: SessionRepository,
-    ):
+    Responsibility is intentionally limited to: validate (already done by
+    the Pydantic schema before this is called) -> persist -> return status.
+
+    No scoring, website analysis, or correlation happens here. All risk
+    calculation lives exclusively in the /score/{session_id} endpoint
+    (app/api/risk.py), which is the single source of truth for scoring.
+    """
+
+    def __init__(self, event_repository: EventRepository):
         self.event_repository = event_repository
-        self.session_repository = session_repository
 
     def process_event(self, event_data: EventRequest) -> EventResponse:
-        """Process an event with session validation and creation.
-        
+        """Persist an incoming event.
+
         Args:
             event_data: Validated incoming event data
 
@@ -26,16 +28,7 @@ class EventProcessor:
             Standardized response indicating processing status
         """
         try:
-            # Check/Create session first
-            session = self.session_repository.get_session(event_data.session_id)
-            if not session:
-                logger.info(f"Creating new session for {event_data.session_id}")
-                self.session_repository.create_session(
-                    session_id=event_data.session_id,
-                    started_at=event_data.timestamp
-                )
-
-            # Process event
+            # Convert to ORM model
             event = Event(
                 id=event_data.event_id,
                 session_id=event_data.session_id,
@@ -45,8 +38,9 @@ class EventProcessor:
                 payload=event_data.payload,
             )
 
+            # Persist event
             saved_event = self.event_repository.save(event)
-            logger.info(f"Processed event {saved_event.event_type}")
+            logger.info(f"Processed event {saved_event.event_type} for session {saved_event.session_id}")
 
             return EventResponse(
                 status="success",
